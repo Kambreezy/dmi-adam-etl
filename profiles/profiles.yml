@@ -5,7 +5,7 @@ dmi_adam_etl:
       type: postgres
       host: "{{ env_var('DBT_SERVER_DEV') }}"
       database: "{{ env_var('DBT_DATABASE_DEV') }}"
-      schema: "{{ env_var('DBT_SCHEMA')}}"
+      schema: "{{ env_var('DBT_SCHEMA_DEV')}}"
       port: "{{ env_var('DBT_PORT_DEV') | int }}"
       user:  "{{env_var('DBT_USER_DEV')}}"
       password: "{{ env_var('DBT_PASSWORD_DEV') }}"
@@ -14,7 +14,7 @@ dmi_adam_etl:
       type: postgres
       host: "{{ env_var('DBT_SERVER_TRAINING') }}"
       database: "{{ env_var('DBT_DATABASE_TRAINING') }}"
-      schema: "{{ env_var('DBT_SCHEMA') }}"
+      schema: "{{ env_var('DBT_SCHEMA_TRAINING') }}"
       port: "{{ env_var('DBT_PORT_TRAINING')  | int }}"
       user:  "{{ env_var('DBT_USER_TRAINING') }}"
       password: "{{ env_var('DBT_PASSWORD_TRAINING') }}"
@@ -23,7 +23,7 @@ dmi_adam_etl:
       type: postgres
       host: "{{ env_var('DBT_SERVER_PROD') }}"
       database: "{{ env_var('DBT_DATABASE_PROD') }}"
-      schema: "{{ env_var('DBT_SCHEMA') }}"
+      schema: "{{ env_var('DBT_SCHEMA_PROD') }}"
       port: "{{ env_var('DBT_PORT_PROD') | int }}"
       user:  "{{ env_var('DBT_USER_PROD') }}"
       password: "{{ env_var('DBT_PASSWORD_PROD') }}"
