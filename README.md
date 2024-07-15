@@ -22,11 +22,11 @@ Contains dbt models for transformations for the ADAM data warehouse
         export DBT_PASSWORD_DEV=<sql server password>
         export DBT_DATABASE_DEV=<database to build models on>
         export DBT_SERVER_DEV=<server ip address>
-        export DBT_SCHEMA=< default schema to build models on>
+        export DBT_SCHEMA_DEV=< default schema to build models on>
         export DBT_PROFILES_DIR=./profiles/
     ```
 
-For `DBT_SCHEMA` make sure you have a schema in the development Postgres instance that you will use to build your models & datasets. Ideally call it *dbt_<name_of_dev>*
+For `DBT_SCHEMA_DEV` make sure you have a schema in the development Postgres instance that you will use to build your models & datasets. Ideally call it *dbt_<name_of_dev>*
 - Run `source .env` to load your environment variables.
 - Make sure you have the config file `profiles.yml` inside the profiles folder with the following configarations for dev:
     
@@ -38,7 +38,7 @@ dmi_adam_etl:
       type: postgres
       host: "{{ env_var('DBT_SERVER_DEV') }}"
       database: "{{ env_var('DBT_DATABASE_DEV') }}"
-      schema: "{{ env_var('DBT_SCHEMA') }}"
+      schema: "{{ env_var('DBT_SCHEMA_DEV') }}"
       port: "{{ env_var('DBT_PORT_DEV') | int }}"
       user:  "{{ env_var('DBT_USER_DEV') }}"
       password: "{{ env_var('DBT_PASSWORD_DEV') }}"
