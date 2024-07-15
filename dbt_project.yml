@@ -31,6 +31,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   dmi_adam_etl:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
+    data_mart:
+      +materialized: table
+    intermediate:
+      +materialized: ephemeral
+    staging:
+      +materialized: ephemeral
+vars:
+  start_date: '2000-01-01'
