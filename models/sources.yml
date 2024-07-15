@@ -1,0 +1,7 @@
+version: 2
+sources:
+  - name: couchdb
+    schema: public
+    tables:
+      - name: couchdb
+        description: ADAM data from CouchDB
