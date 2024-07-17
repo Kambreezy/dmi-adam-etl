@@ -124,9 +124,11 @@ SELECT
     (doc -> 'DForms' -> 'vaccination_acute_flaccid_paralysis' -> 0 -> 'DFields' -> 'values' -> 'vaccine_administered' ->> 'df_value')::text AS vaccine_administered,
     (doc -> 'DForms' -> 'vaccination_acute_flaccid_paralysis' -> 0 -> 'DFields' -> 'values' -> 'date_of_vaccination' ->> 'df_value')::text AS date_of_vaccination,
     (doc -> 'DForms' -> 'vaccination_acute_flaccid_paralysis' -> 0 -> 'DFields' -> 'values' -> 'total_vaccine_doses' ->> 'df_value')::text AS total_vaccine_doses2,
-    (doc -> 'DForms' -> 'vaccination_acute_flaccid_paralysis' -> 0 -> 'DFields' -> 'values' -> 'total_vaccine_sia_doses' ->> 'df_value')::text AS total_vaccine_sia_doses    
+    (doc -> 'DForms' -> 'vaccination_acute_flaccid_paralysis' -> 0 -> 'DFields' -> 'values' -> 'total_vaccine_sia_doses' ->> 'df_value')::text AS total_vaccine_sia_doses
 FROM {{ source('couchdb', 'couchdb') }}
 WHERE 
-    (doc ->> 'type') = 'dform'
-    AND (doc -> 'DFields'::text -> 'values'::text -> 'disease'::text ->> 'df_value') = 'AFP'
-    AND (doc ->> 'ident') IS NOT NULL
+    (doc ->> 'type')::text = 'dform'
+AND
+    (doc -> 'DFields' -> 'values' -> 'disease' ->> 'df_value')::text = 'AFP'
+AND
+    (doc ->> 'ident') IS NOT NULL

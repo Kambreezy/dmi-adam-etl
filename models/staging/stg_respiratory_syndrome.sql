@@ -76,9 +76,11 @@ SELECT
     (doc -> 'DForms' -> 'laboratory_information_respiratory_syndrome' -> 0 -> 'DFields' -> 'values' -> 'date_of_laboratory_testing_results' ->> 'df_value')::text AS date_of_laboratory_testing_results,
     (doc -> 'DForms' -> 'laboratory_information_respiratory_syndrome' -> 0 -> 'DFields' -> 'values' -> 'result_of_laboratory_test' ->> 'df_value')::text AS result_of_laboratory_test,
     (doc -> 'DForms' -> 'laboratory_information_respiratory_syndrome' -> 0 -> 'DFields' -> 'values' -> 'laboratory_facility_name' ->> 'df_value')::text AS laboratory_facility_name,
-    (doc -> 'DForms' -> 'laboratory_information_respiratory_syndrome' -> 0 -> 'DFields' -> 'values' -> 'laboratory_facility_name_other' ->> 'df_value')::text AS laboratory_facility_name_other,
-    doc
+    (doc -> 'DForms' -> 'laboratory_information_respiratory_syndrome' -> 0 -> 'DFields' -> 'values' -> 'laboratory_facility_name_other' ->> 'df_value')::text AS laboratory_facility_name_other
 FROM {{ source('couchdb', 'couchdb') }}
-WHERE (doc ->> 'type'::text) = 'dform'::text
-  AND (((doc -> 'DFields'::text) -> 'values'::text) -> 'syndrome'::text) ->> 'df_value'::text = 'Respiratory Syndrome'::text
-  AND (doc -> 'ident'::text) IS NOT NULL
+WHERE
+    (doc ->> 'type')::text = 'dform'
+AND
+    (doc -> 'DFields' -> 'values' -> 'syndrome' ->> 'df_value')::text = 'Respiratory Syndrome'
+AND
+    (doc -> 'ident') IS NOT NULL

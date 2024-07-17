@@ -51,6 +51,9 @@ SELECT
     (doc -> 'DForms' -> 'collector_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'collector_phone_number' ->> 'df_value')::text AS collector_phone_number,
     (doc -> 'DForms' -> 'collector_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'collectors_email_address' ->> 'df_value')::text AS collectors_email_address
 FROM {{ source('couchdb', 'couchdb') }}
-WHERE (doc ->> 'type')::text = 'dform'::text
-  AND (doc -> 'DFields' -> 'values' -> 'sffff_sample_id' ->> 'df_value') IS NOT NULL
-  AND (doc ->> 'ident') IS NOT NULL
+WHERE
+    (doc ->> 'type')::text = 'dform'
+AND
+    (doc -> 'DFields' -> 'values' -> 'sffff_sample_id' ->> 'df_value') IS NOT NULL
+AND
+    (doc ->> 'ident') IS NOT NULL

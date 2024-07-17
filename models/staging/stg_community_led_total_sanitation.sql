@@ -38,8 +38,8 @@ SELECT
     (doc -> 'DFields' -> 'values' -> 'clts_followup_latrine_construction_date' ->> 'df_value') AS clts_followup_latrine_construction_date
 FROM {{ source('couchdb', 'couchdb') }}
 WHERE
-    (doc ->> 'type')::text = 'dform'::text
+    (doc ->> 'type')::text = 'dform'
 AND
     (doc -> 'DFields' -> 'values' -> 'village' ->> 'df_value')::text IS NOT NULL
 AND
-    (doc -> 'ident')::text IS NOT NULL
+    (doc -> 'ident') IS NOT NULL

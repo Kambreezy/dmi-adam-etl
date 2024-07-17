@@ -69,10 +69,11 @@ SELECT
     (doc -> 'DForms' -> 'case_hospitalization' -> 0 -> 'DFields' -> 'values' -> 'admission_date' ->> 'df_value')::text AS admission_date,
     (doc -> 'DForms' -> 'case_hospitalization' -> 0 -> 'DFields' -> 'values' -> 'inpatient_number' ->> 'df_value')::text AS inpatient_number,
     (doc -> 'DForms' -> 'case_hospitalization' -> 0 -> 'DFields' -> 'values' -> 'discharge_date' ->> 'df_value')::text AS discharge_date,
-    (doc -> 'DForms' -> 'case_hospitalization' -> 0 -> 'DFields' -> 'values' -> 'patient_status' ->> 'df_value')::text AS patient_status,
-    doc
+    (doc -> 'DForms' -> 'case_hospitalization' -> 0 -> 'DFields' -> 'values' -> 'patient_status' ->> 'df_value')::text AS patient_status
 FROM {{ source('couchdb', 'couchdb') }}
-WHERE 
-  (doc ->> 'type'::text) = 'dform'::text 
-  AND ((((doc -> 'DFields'::text) -> 'values'::text) -> 'disease'::text) ->> 'df_value'::text) = 'Rabies'::text 
-  AND (doc -> 'ident'::text) IS NOT NULL
+WHERE
+    (doc ->> 'type')::text = 'dform' 
+AND
+    (doc -> 'DFields' -> 'values' -> 'disease' ->> 'df_value')::text = 'Rabies' 
+AND
+    (doc -> 'ident') IS NOT NULL

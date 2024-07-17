@@ -72,9 +72,11 @@ SELECT
     (doc -> 'DForms' -> 'clinical_information_measles' -> 0 -> 'DFields' -> 'values' -> 'outcome' ->> 'df_value')::text AS outcome,
     (doc -> 'DForms' -> 'clinical_information_measles' -> 0 -> 'DFields' -> 'values' -> 'date_of_death' ->> 'df_value')::text AS date_of_death,
     (doc -> 'DForms' -> 'clinical_information_measles' -> 0 -> 'DFields' -> 'values' -> 'status_of_patient' ->> 'df_value')::text AS status_of_patient,
-    (doc -> 'DForms' -> 'clinical_information_measles' -> 0 -> 'DFields' -> 'values' -> 'date_of_discharge' ->> 'df_value')::text AS date_of_discharge,
-    doc
+    (doc -> 'DForms' -> 'clinical_information_measles' -> 0 -> 'DFields' -> 'values' -> 'date_of_discharge' ->> 'df_value')::text AS date_of_discharge
 FROM {{ source('couchdb', 'couchdb') }}
-WHERE (doc ->> 'type'::text) = 'dform'::text
-  AND (((doc -> 'DFields'::text) -> 'values'::text) -> 'disease'::text) ->> 'df_value'::text = 'Measles'::text
-  AND (doc -> 'ident'::text) IS NOT NULL
+WHERE
+    (doc ->> 'type')::text = 'dform'
+AND
+    (doc -> 'DFields' -> 'values' -> 'disease' ->> 'df_value')::text = 'Measles'
+AND
+    (doc -> 'ident') IS NOT NULL

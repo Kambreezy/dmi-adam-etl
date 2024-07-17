@@ -99,4 +99,4 @@ WHERE
 AND
     (doc -> 'DFields' -> 'values' -> 'syndrome' ->> 'df_value')::text = 'Diarrhoeal Disease'
 AND
-    (doc -> 'ident'::text) IS NOT NULL
+    (doc -> 'ident') IS NOT NULL

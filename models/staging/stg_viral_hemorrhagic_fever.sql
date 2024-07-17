@@ -108,5 +108,7 @@ SELECT
 FROM {{ source('couchdb', 'couchdb') }}
 WHERE 
     (doc ->> 'type') = 'dform'
-    AND (doc -> 'DFields'::text -> 'values'::text -> 'syndrome'::text ->> 'df_value') = 'VHF'
-    AND (doc ->> 'ident') IS NOT NULL
+AND
+    (doc -> 'DFields' -> 'values' -> 'syndrome' ->> 'df_value')::text = 'VHF'
+AND
+    (doc ->> 'ident') IS NOT NULL

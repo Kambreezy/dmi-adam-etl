@@ -64,6 +64,8 @@ SELECT
     (doc -> 'DForms' -> 'clinical_information_meningitis' -> 0 -> 'DFields' -> 'values' -> 'patient_status' ->> 'df_value')::text AS patient_status
 FROM {{ source('couchdb', 'couchdb') }}
 WHERE 
-    (doc ->> 'type') = 'dform'
-    AND (((doc -> 'DFields' -> 'values') -> 'disease' ->> 'df_value') = 'Meningitis')
-    AND (doc ->> 'ident') IS NOT NULL
+    (doc ->> 'type')::text = 'dform'
+AND
+    (doc -> 'DFields' -> 'values' -> 'disease' ->> 'df_value')::text = 'Meningitis'
+AND
+    (doc ->> 'ident') IS NOT NULL

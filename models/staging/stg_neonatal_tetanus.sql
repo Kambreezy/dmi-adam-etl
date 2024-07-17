@@ -66,6 +66,9 @@ SELECT
     (doc -> 'DForms' -> 'laboratory_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'name_of_laboratory_facility' ->> 'df_value')::text AS name_of_laboratory_facility,
     (doc -> 'DForms' -> 'laboratory_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'mfl_number_of_laboratory_facility' ->> 'df_value')::text AS mfl_number_of_laboratory_facility
 FROM {{ source('couchdb', 'couchdb') }}
-WHERE (doc ->> 'type'::text) = 'dform'::text 
-    AND ((((doc -> 'DFields'::text) -> 'values'::text) -> 'disease'::text) ->> 'df_value'::text) = 'Neonatal Tetanus'::text 
-    AND (doc -> 'ident'::text) IS NOT NULL
+WHERE
+    (doc ->> 'type')::text = 'dform' 
+AND
+    (doc -> 'DFields' -> 'values' -> 'disease' ->> 'df_value')::text = 'Neonatal Tetanus'
+AND
+    (doc -> 'ident') IS NOT NULL
