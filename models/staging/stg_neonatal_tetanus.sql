@@ -57,7 +57,7 @@ SELECT
     (doc -> 'DForms' -> 'clinical_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'date_of_discharge' ->> 'df_value')::text AS date_of_discharge,
     (doc -> 'DForms' -> 'clinical_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'date_of_death' ->> 'df_value')::text AS date_of_death,
     (doc -> 'DForms' -> 'laboratory_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'laboratory_samples_were_collected' ->> 'df_value')::text AS laboratory_samples_were_collected,
-    (doc -> 'DForms' -> 'laboratory_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'laboratory_samples_collected' ->> 'df_value')::jsonb AS laboratory_samples_collected,
+    (doc -> 'DForms' -> 'laboratory_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'laboratory_samples_collected' ->> 'df_value')::text AS laboratory_samples_collected,
     (doc -> 'DForms' -> 'laboratory_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'laboratory_samples_collected_other' ->> 'df_value')::text AS laboratory_samples_collected_other,
     (doc -> 'DForms' -> 'laboratory_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'date_of_sample_collection' ->> 'df_value')::text AS date_of_sample_collection,
     (doc -> 'DForms' -> 'laboratory_information_nnt' -> 0 -> 'DFields' -> 'values' -> 'result_of_laboratory_test' ->> 'df_value')::text AS result_of_laboratory_test,
