@@ -31,15 +31,15 @@ SELECT
     (doc -> 'DFields' -> 'values' -> 'clts_commitments' ->> 'df_value')::text AS clts_commitments,
     (doc -> 'DFields' -> 'values' -> 'clts_commitment_latrine_construction_date' ->> 'df_value')::text AS clts_commitment_latrine_construction_date,
     (doc -> 'DFields' -> 'values' -> 'clts_commitment_latrine_under_construction' ->> 'df_value')::text AS clts_commitment_latrine_under_construction,
-    (doc -> 'DFields' -> 'values' -> 'clts_commitment_latrine_completion_date' ->> 'df_value') AS clts_commitment_latrine_completion_date,
+    (doc -> 'DFields' -> 'values' -> 'clts_commitment_latrine_completion_date' ->> 'df_value')::text AS clts_commitment_latrine_completion_date,
     (doc -> 'DFields' -> 'values' -> 'title_clts_follow_up' ->> 'df_value')::text AS title_clts_follow_up,
     (doc -> 'DFields' -> 'values' -> 'clts_commitment_new_latrine_constructed' ->> 'df_value')::text AS clts_commitment_new_latrine_constructed,
     (doc -> 'DFields' -> 'values' -> 'ctls_follow_up_handwashing_facility_constructed' ->> 'df_value')::text AS ctls_follow_up_handwashing_facility_constructed,
-    (doc -> 'DFields' -> 'values' -> 'clts_followup_latrine_construction_date' ->> 'df_value') AS clts_followup_latrine_construction_date
+    (doc -> 'DFields' -> 'values' -> 'clts_followup_latrine_construction_date' ->> 'df_value')::text AS clts_followup_latrine_construction_date
 FROM {{ source('couchdb', 'couchdb') }}
 WHERE
-    (doc ->> 'type')::text = 'dform'::text
+    (doc ->> 'type')::text = 'dform'
 AND
     (doc -> 'DFields' -> 'values' -> 'village' ->> 'df_value')::text IS NOT NULL
 AND
-    (doc -> 'ident')::text IS NOT NULL
+    (doc -> 'ident') IS NOT NULL

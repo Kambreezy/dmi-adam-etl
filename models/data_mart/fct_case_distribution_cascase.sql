@@ -27,8 +27,6 @@ WITH suspected_diarrhoeal_disease_cases AS (
     FROM {{ ref('fct_case_linelist') }}
     WHERE
         syndrome = 'Diarrhoeal Disease'
-    AND
-        rdt_done IN ('Yes', 'No', 'Unknown')
     GROUP BY case_date
 ),
 tested_diarrhoeal_disease_cases AS (
