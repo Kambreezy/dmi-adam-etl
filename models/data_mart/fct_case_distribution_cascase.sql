@@ -123,6 +123,118 @@ died_diarrhoeal_disease_cases AS (
     AND
         outcome_of_patient = 'Dead'
     GROUP BY case_date
+),
+suspected_measles_cases AS (
+    SELECT 
+        MAX(syndrome) AS syndrome,
+        MAX(disease) AS disease,
+        case_date,
+        MAX(epi_week) AS epi_week,
+        MAX(country) AS country,
+        MAX(county) AS county,
+        MAX(subcounty) AS subcounty,
+        'Suspected' as category,
+        COUNT(*) as cases,
+        current_date AS load_date
+    FROM {{ ref('fct_case_linelist') }}
+    WHERE
+        disease = 'Measles'
+    GROUP BY case_date
+),
+tested_measles_cases AS (
+    SELECT 
+        MAX(syndrome) AS syndrome,
+        MAX(disease) AS disease,
+        case_date,
+        MAX(epi_week) AS epi_week,
+        MAX(country) AS country,
+        MAX(county) AS county,
+        MAX(subcounty) AS subcounty,
+        'Tested' as category,
+        COUNT(*) as cases,
+        current_date AS load_date
+    FROM {{ ref('fct_case_linelist') }}
+    WHERE
+        disease = 'Measles'
+    AND
+        rdt_done = 'Yes'
+    GROUP BY case_date
+),
+confirmed_measles_cases AS (
+    SELECT 
+        MAX(syndrome) AS syndrome,
+        MAX(disease) AS disease,
+        case_date,
+        MAX(epi_week) AS epi_week,
+        MAX(country) AS country,
+        MAX(county) AS county,
+        MAX(subcounty) AS subcounty,
+        'Confirmed' as category,
+        COUNT(*) as cases,
+        current_date AS load_date
+    FROM {{ ref('fct_case_linelist') }}
+    WHERE
+        disease = 'Measles'
+    AND
+        rdt_results = 'Positive'
+    GROUP BY case_date
+),
+admitted_measles_cases AS (
+    SELECT 
+        MAX(syndrome) AS syndrome,
+        MAX(disease) AS disease,
+        case_date,
+        MAX(epi_week) AS epi_week,
+        MAX(country) AS country,
+        MAX(county) AS county,
+        MAX(subcounty) AS subcounty,
+        'Admitted' as category,
+        COUNT(*) as cases,
+        current_date AS load_date
+    FROM {{ ref('fct_case_linelist') }}
+    WHERE
+        disease = 'Measles'
+    AND
+        status_of_patient = 'Admitted'
+    GROUP BY case_date
+),
+recovered_measles_cases AS (
+    SELECT 
+        MAX(syndrome) AS syndrome,
+        MAX(disease) AS disease,
+        case_date,
+        MAX(epi_week) AS epi_week,
+        MAX(country) AS country,
+        MAX(county) AS county,
+        MAX(subcounty) AS subcounty,
+        'Recovered' as category,
+        COUNT(*) as cases,
+        current_date AS load_date
+    FROM {{ ref('fct_case_linelist') }}
+    WHERE
+        disease = 'Measles'
+    AND
+        status_of_patient = 'Recovered'
+    GROUP BY case_date
+),
+died_measles_cases AS (
+    SELECT 
+        MAX(syndrome) AS syndrome,
+        MAX(disease) AS disease,
+        case_date,
+        MAX(epi_week) AS epi_week,
+        MAX(country) AS country,
+        MAX(county) AS county,
+        MAX(subcounty) AS subcounty,
+        'Died' as category,
+        COUNT(*) as cases,
+        current_date AS load_date
+    FROM {{ ref('fct_case_linelist') }}
+    WHERE
+        disease = 'Measles'
+    AND
+        outcome_of_patient = 'Dead'
+    GROUP BY case_date
 )
 
 SELECT * FROM suspected_diarrhoeal_disease_cases
@@ -136,3 +248,15 @@ UNION
 SELECT * FROM recovered_diarrhoeal_disease_cases
 UNION
 SELECT * FROM died_diarrhoeal_disease_cases
+UNION
+SELECT * FROM suspected_measles_cases
+UNION
+SELECT * FROM tested_measles_cases
+UNION
+SELECT * FROM confirmed_measles_cases
+UNION
+SELECT * FROM admitted_measles_cases
+UNION
+SELECT * FROM recovered_measles_cases
+UNION
+SELECT * FROM died_measles_cases
