@@ -2,7 +2,7 @@ name: Deploy ADAM training dbt
 
 on:
   schedule:
-    - cron: '*/2 * * * *'
+    - cron: '*/5 * * * *'
 
 env:
   DBT_SERVER_TRAINING: ${{ secrets.DBT_SERVER_TRAINING }}
