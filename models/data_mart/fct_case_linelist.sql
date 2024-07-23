@@ -312,6 +312,7 @@ SELECT
     current_date AS load_date
 FROM
     {{ ref('int_diarrhoeal_disease') }}  as int_diarrhoeal_disease
+WHERE case_date IS NOT NULL
 
 UNION
 
