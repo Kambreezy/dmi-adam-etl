@@ -11,8 +11,14 @@ SELECT
     location_longitude::text AS location_longitude,
     syndrome::text AS syndrome,
     disease::text AS disease,
-    to_timestamp(date_of_onset, 'DD/MM/YYYY HH24:MI:SS')::date AS case_date,
-    to_char(to_timestamp(date_of_onset, 'DD/MM/YYYY HH24:MI:SS'), 'YYYY "W"IW') AS epi_week,
+    CASE 
+        WHEN date_of_onset ~ '^\d{2}/\d{2}/\d{4}$' THEN to_timestamp(date_of_onset, 'DD/MM/YYYY')::date 
+        ELSE NULL 
+    END AS case_date,
+    CASE 
+        WHEN date_of_onset ~ '^\d{2}/\d{2}/\d{4}$' THEN to_char(to_timestamp(date_of_onset, 'DD/MM/YYYY HH24:MI:SS'), 'YYYY "W"IW') 
+        ELSE NULL
+    END AS epi_week,
     epid::text AS epid,
     date_of_investigation::text AS date_of_investigation,
     given_name::text AS given_name,
