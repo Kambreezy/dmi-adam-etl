@@ -27,7 +27,7 @@ SELECT
         WHEN age_years::float > 16 THEN '16+ yrs'
         ELSE 'Unknown'
     END AS age_group,
-    date_of_birth::text AS date_of_birth,
+    to_timestamp(date_of_birth, 'DD/MM/YYYY HH24:MI:SS')::date AS date_of_birth,
     phone_number::text AS phone_number,
     occupation::text AS occupation,
     occupation_other::text AS occupation_other,
