@@ -11,8 +11,8 @@ SELECT
     location_longitude::text AS location_longitude,
     syndrome::text AS syndrome,
     disease::text AS disease,
-    to_timestamp(symptoms_start_date, 'DD/MM/YYYY HH24:MI:SS')::date AS case_date,
-    to_char(to_timestamp(symptoms_start_date, 'DD/MM/YYYY HH24:MI:SS'), 'YYYY "W"IW') AS epi_week,
+    CASE WHEN symptoms_start_date ~ '^\d{2}/\d{2}/\d{4}$' THEN to_timestamp(symptoms_start_date, 'DD/MM/YYYY')::date ELSE NULL END AS case_date,
+    CASE WHEN symptoms_start_date ~ '^\d{2}/\d{2}/\d{4}$' THEN to_char(to_timestamp(symptoms_start_date, 'DD/MM/YYYY'), 'YYYY "W"IW') ELSE NULL END AS epi_week,
     epid::text AS epid,
     date_of_investigation::text AS date_of_investigation,
     location_of_investigation::text AS location_of_investigation,
@@ -28,7 +28,7 @@ SELECT
         WHEN age_years::float > 16 THEN '16+ yrs'
         ELSE 'Unknown'
     END AS age_group,
-    to_timestamp(date_of_birth, 'DD/MM/YYYY HH24:MI:SS')::date AS date_of_birth,
+    CASE WHEN date_of_birth ~ '^\d{2}/\d{2}/\d{4}$' THEN to_timestamp(date_of_birth, 'DD/MM/YYYY')::date ELSE NULL END AS date_of_birth,
     country::text AS country,
     county::text AS county,
     subcounty::text AS subcounty,
