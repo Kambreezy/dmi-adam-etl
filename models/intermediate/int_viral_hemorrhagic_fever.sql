@@ -19,9 +19,16 @@ SELECT
     given_name::text AS given_name,
     family_name::text AS family_name,
     sex::text AS sex,
-    age_years::float AS age_years,
-    age_months::float AS age_months,
+    CASE 
+        WHEN age_years ~ '^[0-9]+(\.[0-9]+)?$' THEN age_years::float
+        ELSE NULL
+    END AS age_years,
+    CASE 
+        WHEN age_months ~ '^[0-9]+(\.[0-9]+)?$' THEN age_months::float
+        ELSE NULL
+    END AS age_months,
     CASE
+        WHEN NOT (age_years ~ '^[0-9]+(\.[0-9]+)?$') THEN 'Unknown'
         WHEN age_years::float < 2 THEN '0-2 yrs'
         WHEN age_years::float BETWEEN 2 AND 5 THEN '2-5 yrs'
         WHEN age_years::float BETWEEN 5 AND 16 THEN '5-16 yrs'
