@@ -12,315 +12,72 @@
     ]
 )}}
 
-WITH suspected_acute_flaccid_paralysis AS (
+{% set categories = ['Suspected', 'Tested', 'Confirmed', 'Admitted', 'Recovered', 'Died'] %}
+{% set diseases = ['\'AFP\'', '\'Measles\'', '\'Meningitis\'', '\'Neonatal Tetanus\'', '\'Rabies\''] %}
+{% set syndromes = ['\'Diarrhoeal Disease\'', '\'Respiratory Syndrome\'', '\'VHF\''] %}
+
+WITH base_data AS (
     SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
+        syndrome,
+        disease,
         case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Suspected' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
+        epi_week,
+        country,
+        county,
+        subcounty,
+        COUNT(*) AS suspected,
+        SUM(CASE WHEN tested = 1 THEN 1 ELSE 0 END) AS tested,
+        SUM(CASE WHEN confirmed = 1 THEN 1 ELSE 0 END) AS confirmed,
+        SUM(CASE WHEN admitted = 1 THEN 1 ELSE 0 END) AS admitted,
+        SUM(CASE WHEN discharged = 1 THEN 1 ELSE 0 END) AS recovered,
+        SUM(CASE WHEN died = 1 THEN 1 ELSE 0 END) AS died
     FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'AFP'
-    GROUP BY case_date
+    WHERE disease IN ({{ diseases | join(', ') }}) OR syndrome IN ({{ syndromes | join(', ') }})
+    GROUP BY syndrome, disease, case_date, epi_week, country, county, subcounty
 ),
-tested_acute_flaccid_paralysis AS (
+
+final_data AS (
+    {% for category in categories %}
     SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
+        syndrome,
+        disease,
         case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Tested' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'AFP' AND tested = 1
-    GROUP BY case_date
-),
-confirmed_acute_flaccid_paralysis AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Confirmed' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'AFP' AND confirmed = 1
-    GROUP BY case_date
-),
-admitted_acute_flaccid_paralysis AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Admitted' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'AFP' AND admitted = 1
-    GROUP BY case_date
-),
-recovered_acute_flaccid_paralysis AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Recovered' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'AFP' AND discharged = 1
-    GROUP BY case_date
-),
-died_acute_flaccid_paralysis AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Died' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'AFP' AND died = 1
-    GROUP BY case_date
-),
-suspected_diarrhoeal_disease_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Suspected' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE syndrome = 'Diarrhoeal Disease'
-    GROUP BY case_date
-),
-tested_diarrhoeal_disease_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Tested' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE syndrome = 'Diarrhoeal Disease' AND tested = 1
-    GROUP BY case_date
-),
-confirmed_diarrhoeal_disease_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Confirmed' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE syndrome = 'Diarrhoeal Disease' AND confirmed = 1
-    GROUP BY case_date
-),
-admitted_diarrhoeal_disease_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Admitted' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE syndrome = 'Diarrhoeal Disease' AND admitted = 1
-    GROUP BY case_date
-),
-recovered_diarrhoeal_disease_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Recovered' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE syndrome = 'Diarrhoeal Disease' AND discharged = 1
-    GROUP BY case_date
-),
-died_diarrhoeal_disease_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Died' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE syndrome = 'Diarrhoeal Disease' AND died = 1
-    GROUP BY case_date
-),
-suspected_measles_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Suspected' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'Measles'
-    GROUP BY case_date
-),
-tested_measles_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Tested' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'Measles' AND tested = 1
-    GROUP BY case_date
-),
-confirmed_measles_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Confirmed' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'Measles' AND confirmed = 1
-    GROUP BY case_date
-),
-admitted_measles_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Admitted' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'Measles' AND admitted = 1
-    GROUP BY case_date
-),
-recovered_measles_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Recovered' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'Measles' AND discharged = 1
-    GROUP BY case_date
-),
-died_measles_cases AS (
-    SELECT 
-        MAX(syndrome) AS syndrome,
-        MAX(disease) AS disease,
-        case_date,
-        MAX(epi_week) AS epi_week,
-        MAX(country) AS country,
-        MAX(county) AS county,
-        MAX(subcounty) AS subcounty,
-        'Died' as category,
-        COUNT(*) as cases,
-        current_date AS load_date
-    FROM {{ ref('fct_case_linelist') }}
-    WHERE disease = 'Measles' AND died = 1
-    GROUP BY case_date
+        epi_week,
+        country,
+        county,
+        subcounty,
+        '{{ category }}' AS category,
+        {% if category == 'Suspected' %}
+        COALESCE(suspected, 0) AS cases
+        {% elif category == 'Tested' %}
+        COALESCE(tested, 0) AS cases
+        {% elif category == 'Confirmed' %}
+        COALESCE(confirmed, 0) AS cases
+        {% elif category == 'Admitted' %}
+        COALESCE(admitted, 0) AS cases
+        {% elif category == 'Recovered' %}
+        COALESCE(recovered, 0) AS cases
+        {% elif category == 'Died' %}
+        COALESCE(died, 0) AS cases
+        {% endif %}
+    FROM base_data
+
+    {% if not loop.last %}
+    UNION ALL
+    {% endif %}
+    {% endfor %}
 )
 
-SELECT * FROM suspected_diarrhoeal_disease_cases
-UNION
-SELECT * FROM tested_diarrhoeal_disease_cases
-UNION
-SELECT * FROM confirmed_diarrhoeal_disease_cases
-UNION
-SELECT * FROM admitted_diarrhoeal_disease_cases
-UNION
-SELECT * FROM recovered_diarrhoeal_disease_cases
-UNION
-SELECT * FROM died_diarrhoeal_disease_cases
-UNION
-SELECT * FROM suspected_measles_cases
-UNION
-SELECT * FROM tested_measles_cases
-UNION
-SELECT * FROM confirmed_measles_cases
-UNION
-SELECT * FROM admitted_measles_cases
-UNION
-SELECT * FROM recovered_measles_cases
-UNION
-SELECT * FROM died_measles_cases
+SELECT 
+    syndrome,
+    disease,
+    case_date,
+    epi_week,
+    country,
+    county,
+    subcounty,
+    category,
+    cases,
+    current_date AS load_date
+FROM final_data
+ORDER BY syndrome, disease, case_date DESC, category
