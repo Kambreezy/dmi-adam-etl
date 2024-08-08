@@ -2,6 +2,8 @@ SELECT
     mform_id::text AS mform_id,
     form_id::text AS form_id,
     case_unique_id::text AS case_unique_id,
+    CASE WHEN clts_triggering_date ~ '^\d{2}/\d{2}/\d{4}$' THEN to_timestamp(clts_triggering_date, 'DD/MM/YYYY')::date ELSE NULL END AS case_date,
+    CASE WHEN clts_triggering_date ~ '^\d{2}/\d{2}/\d{4}$' THEN to_char(to_timestamp(clts_triggering_date, 'DD/MM/YYYY'), 'YYYY "W"IW') ELSE NULL END AS epi_week,
     created_username::text AS created_username,
     created_timestamp::text AS created_timestamp,
     modified_username::text AS modified_username,

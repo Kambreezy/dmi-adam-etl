@@ -113,6 +113,7 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_acute_flaccid_paralysis') }} AS int_acute_flaccid_paralysis
+WHERE case_date IS NOT NULL
 
 UNION
 
@@ -121,8 +122,8 @@ SELECT
     case_unique_id,
     'Community Led Total Sanitation' AS syndrome,
     null::text AS disease,
-    null::date AS case_date,
-    null::text AS epi_week,
+    case_date,
+    epi_week,
     null::text AS epid,
     null::text AS date_of_investigation,
     null::text AS given_name,
@@ -212,6 +213,7 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_community_led_total_sanitation') }}
+WHERE case_date IS NOT NULL
 
 UNION
 
@@ -412,6 +414,7 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_measles') }}
+WHERE case_date IS NOT NULL
 
 UNION
 
@@ -511,6 +514,7 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_meningitis') }}
+WHERE case_date IS NOT NULL
 
 UNION
 
@@ -610,6 +614,7 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_neonatal_tetanus') }}
+WHERE case_date IS NOT NULL
 
 UNION
 
@@ -709,6 +714,7 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_rabies') }}
+WHERE case_date IS NOT NULL
 
 UNION
 
@@ -808,6 +814,7 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_respiratory_syndrome') }}
+WHERE case_date IS NOT NULL
 
 UNION
 
@@ -907,6 +914,7 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_sampling_form_for_fortified_foods') }}
+WHERE case_date IS NOT NULL
 
 UNION
 
@@ -1006,3 +1014,4 @@ SELECT
     modified_timestamp,
     current_date AS load_date
 FROM {{ ref('int_viral_hemorrhagic_fever') }}
+WHERE case_date IS NOT NULL
