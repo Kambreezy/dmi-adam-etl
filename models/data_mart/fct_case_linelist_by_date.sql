@@ -42,6 +42,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.disease = 'AFP'
+    WHERE confirmed = 1
 ), case_linelist_by_date_community_led_total_sanitation AS (
     SELECT
         dim_date.case_date,
@@ -67,6 +68,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.syndrome = 'Community Led Total Sanitation'
+    WHERE confirmed = 1
 ), case_linelist_by_date_diarrhoeal_diseases AS (
     SELECT
         dim_date.case_date,
@@ -92,6 +94,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.syndrome = 'Diarrhoeal Disease'
+    WHERE confirmed = 1
 ), case_linelist_by_date_measles AS (
     SELECT
         dim_date.case_date,
@@ -117,6 +120,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.disease = 'Measles'
+    WHERE confirmed = 1
 ), case_linelist_by_date_meningitis AS (
     SELECT
         dim_date.case_date,
@@ -142,6 +146,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.disease = 'Meningitis'
+    WHERE confirmed = 1
 ), case_linelist_by_date_monkey_pox AS (
     SELECT
         dim_date.case_date,
@@ -167,6 +172,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.disease = 'Monkey Pox'
+    WHERE confirmed = 1
 ), case_linelist_by_date_neonatal_tetanus AS (
     SELECT
         dim_date.case_date,
@@ -192,6 +198,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.disease = 'Neonatal Tetanus'
+    WHERE confirmed = 1
 ), case_linelist_by_date_rabies AS (
     SELECT
         dim_date.case_date,
@@ -217,6 +224,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.disease = 'Rabies'
+    WHERE confirmed = 1
 ), case_linelist_by_date_respiratory_syndrome AS (
     SELECT
         dim_date.case_date,
@@ -242,6 +250,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.syndrome = 'Respiratory Syndrome'
+    WHERE confirmed = 1
 ), case_linelist_by_date_sampling_form_for_fortified_foods AS (
     SELECT
         dim_date.case_date,
@@ -267,6 +276,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.syndrome = 'Sampling Form for Fortified Foods'
+    WHERE confirmed = 1
 ), case_linelist_by_date_viral_hemorrhagic_fever AS (
     SELECT
         dim_date.case_date,
@@ -292,6 +302,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.syndrome = 'VHF'
+    WHERE confirmed = 1
 )
 
 SELECT * FROM case_linelist_by_date_acute_flaccid_paralysis

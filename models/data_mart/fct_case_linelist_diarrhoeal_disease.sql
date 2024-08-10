@@ -83,7 +83,7 @@ SELECT
     outcome_of_patient,
     date_of_death,
     status_of_patient,
-    date_of_discharge,    
+    date_of_discharge,
     rdt_done,
     rdt_results,
     laboratory_name,
