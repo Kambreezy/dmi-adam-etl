@@ -1,3 +1,13 @@
+{{ config(
+    materialized = 'table',
+    indexes=[
+      {'columns': ['case_date']},
+      {'columns': ['epi_week']},
+      {'columns': ['county']},
+      {'columns': ['subcounty']},
+    ]
+)}}
+
 SELECT
     mform_id,
     form_id,
