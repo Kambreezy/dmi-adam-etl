@@ -142,6 +142,31 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
         current_date AS load_date
     FROM {{ ref('dim_date') }} AS dim_date
     LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.disease = 'Meningitis'
+), case_linelist_by_date_monkey_pox AS (
+    SELECT
+        dim_date.case_date,
+        dim_date.epi_week,
+        syndrome,
+        CASE
+            WHEN linelist.disease IS NULL THEN 'Monkey Pox'
+            ELSE linelist.disease
+        END AS disease,
+        country,
+        county,
+        subcounty,
+        CASE
+            WHEN linelist.case_date IS NOT NULL THEN 1
+            ELSE 0
+        END AS cases,
+        suspected,
+        tested,
+        confirmed,
+        admitted,
+        discharged,
+        died,
+        current_date AS load_date
+    FROM {{ ref('dim_date') }} AS dim_date
+    LEFT JOIN {{ ref('fct_case_linelist') }} AS linelist ON dim_date.case_date = linelist.case_date AND linelist.disease = 'Monkey Pox'
 ), case_linelist_by_date_neonatal_tetanus AS (
     SELECT
         dim_date.case_date,
@@ -278,6 +303,8 @@ UNION
 SELECT * FROM case_linelist_by_date_measles
 UNION
 SELECT * FROM case_linelist_by_date_meningitis
+UNION
+SELECT * FROM case_linelist_by_date_monkey_pox
 UNION
 SELECT * FROM case_linelist_by_date_neonatal_tetanus
 UNION
