@@ -13,7 +13,7 @@
 )}}
 
 {% set categories = ['Suspected', 'Tested', 'Confirmed', 'Admitted', 'Recovered', 'Died'] %}
-{% set diseases = ['\'AFP\'', '\'Measles\'', '\'Meningitis\'', '\'Neonatal Tetanus\'', '\'Rabies\''] %}
+{% set diseases = ['\'AFP\'', '\'Measles\'', '\'Meningitis\'', '\'Monkey Pox\'', '\'Neonatal Tetanus\'', '\'Rabies\''] %}
 {% set syndromes = ['\'Diarrhoeal Disease\'', '\'Respiratory Syndrome\'', '\'VHF\''] %}
 
 WITH base_data AS (
