@@ -1,4 +1,4 @@
-name: Deploy ADAM prod dbt
+name: Deploy ADAM prod replica dbt
 
 on:
   schedule:
