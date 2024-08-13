@@ -1,8 +1,8 @@
-name: Deploy ADAM prod replica dbt
+name: Deploy ADAM prod dbt
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 0 1 * *'
 
 env:
   DBT_SERVER_PROD: ${{ secrets.DBT_SERVER_PROD }}
