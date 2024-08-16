@@ -17,6 +17,7 @@ SELECT
     (doc -> 'DForms' -> 'sample_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'batch_number' ->> 'df_value')::text AS batch_number,
     (doc -> 'DForms' -> 'sample_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'date_of_manufacture' ->> 'df_value')::text AS date_of_manufacture,
     (doc -> 'DForms' -> 'sample_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'date_of_expiry' ->> 'df_value')::text AS date_of_expiry,
+    (doc -> 'DForms' -> 'sample_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'name_of_manufacturer' ->> 'df_value')::text AS name_of_manufacturer,
     (doc -> 'DForms' -> 'sample_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'name_of_importer_dealer' ->> 'df_value')::text AS name_of_importer_dealer,
     (doc -> 'DForms' -> 'sample_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'method_of_collection' ->> 'df_value')::text AS method_of_collection,
     (doc -> 'DForms' -> 'sample_information_fdc' -> 0 -> 'DFields' -> 'values' -> 'size_of_lot_sample' ->> 'df_value')::text AS size_of_lot_sample,
