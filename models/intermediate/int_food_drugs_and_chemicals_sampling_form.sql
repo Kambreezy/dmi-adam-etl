@@ -12,13 +12,22 @@ SELECT
     sample_number::text AS sample_number,
     date_of_sample_collection::text AS date_of_sample_collection,
     time_of_sample_collection::text AS time_of_sample_collection,
-    type_of_food_product::text AS type_of_food_product,
-    type_of_food_sample::text AS type_of_food_sample,
+    CASE
+        WHEN TRIM(type_of_food_product::text) = '' THEN 'Unknown'
+        WHEN type_of_food_product IS NULL THEN 'Unknown'
+        ELSE TRIM(type_of_food_product::text)
+    END AS type_of_food_product,
+    CASE
+        WHEN TRIM(type_of_food_sample::text) = '' THEN 'Unknown'
+        WHEN type_of_food_sample IS NULL THEN 'Unknown'
+        ELSE TRIM(type_of_food_sample::text)
+    END AS type_of_food_sample,
     name_of_product::text AS name_of_product,
     description_of_product::text AS description_of_product,
     batch_number::text AS batch_number,
     date_of_manufacture::text AS date_of_manufacture,
     date_of_expiry::text AS date_of_expiry,
+    name_of_manufacturer::text AS name_of_manufacturer,
     name_of_importer_dealer::text AS name_of_importer_dealer,
     method_of_collection::text AS method_of_collection,
     size_of_lot_sample::text AS size_of_lot_sample,
@@ -41,7 +50,11 @@ SELECT
     subcounty::text AS subcounty,
     ward::text AS ward,
     landmark::text AS landmark,
-    type_of_premise::text AS type_of_premise,
+    CASE
+        WHEN TRIM(type_of_premise::text) = '' THEN 'Unknown'
+        WHEN type_of_premise IS NULL THEN 'Unknown'
+        ELSE TRIM(type_of_premise::text)
+    END AS type_of_premise,
     name_of_premise::text AS name_of_premise,
     premise_phone_number::text AS premise_phone_number,
     premise_email_address::text AS premise_email_address

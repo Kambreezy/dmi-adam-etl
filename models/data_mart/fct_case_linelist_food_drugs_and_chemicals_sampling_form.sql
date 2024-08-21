@@ -29,6 +29,7 @@ SELECT
     batch_number,
     date_of_manufacture,
     date_of_expiry,
+    name_of_manufacturer,
     name_of_importer_dealer,
     method_of_collection,
     size_of_lot_sample,
