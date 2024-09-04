@@ -17,6 +17,8 @@ SELECT
     date_of_investigation::text AS date_of_investigation,
     location_of_investigation::text AS location_of_investigation,
     location_of_investigation_other::text AS location_of_investigation_other,
+    type_of_case::text AS type_of_case,
+    unique_id_of_case::text AS unique_id_of_case,
     family::text AS family_name,
     given::text AS given_name,
     sex::text AS sex,

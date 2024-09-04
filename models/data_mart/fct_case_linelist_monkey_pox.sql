@@ -28,6 +28,8 @@ SELECT
     date_of_investigation,
     location_of_investigation,
     location_of_investigation_other,
+    type_of_case,
+    unique_id_of_case,
     family_name,
     given_name,
     sex,

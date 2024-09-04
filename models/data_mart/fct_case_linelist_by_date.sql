@@ -5,6 +5,7 @@
         {'columns': ['disease']},
         {'columns': ['case_date']},
         {'columns': ['epi_week']},
+        {'columns': ['type_of_case']},
         {'columns': ['country']},
         {'columns': ['county']},
         {'columns': ['subcounty']},
@@ -26,6 +27,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             WHEN linelist.disease IS NULL THEN 'AFP'
             ELSE linelist.disease
         END AS disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -52,6 +54,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             ELSE linelist.syndrome
         END AS syndrome,
         disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -78,6 +81,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             ELSE linelist.syndrome
         END AS syndrome,
         disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -104,6 +108,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             WHEN linelist.disease IS NULL THEN 'Measles'
             ELSE linelist.disease
         END AS disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -130,6 +135,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             WHEN linelist.disease IS NULL THEN 'Meningitis'
             ELSE linelist.disease
         END AS disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -156,6 +162,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             WHEN linelist.disease IS NULL THEN 'Monkey Pox'
             ELSE linelist.disease
         END AS disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -182,6 +189,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             WHEN linelist.disease IS NULL THEN 'Neonatal Tetanus'
             ELSE linelist.disease
         END AS disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -208,6 +216,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             WHEN linelist.disease IS NULL THEN 'Rabies'
             ELSE linelist.disease
         END AS disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -234,6 +243,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             ELSE linelist.syndrome
         END AS syndrome,
         disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -260,6 +270,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             ELSE linelist.syndrome
         END AS syndrome,
         disease,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -286,6 +297,7 @@ WITH case_linelist_by_date_acute_flaccid_paralysis AS (
             ELSE linelist.syndrome
         END AS syndrome,
         disease,
+        type_of_case,
         country,
         county,
         subcounty,
