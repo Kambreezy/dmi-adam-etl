@@ -5,6 +5,7 @@
       {'columns': ['disease']},
       {'columns': ['case_date']},
       {'columns': ['epi_week']},
+      {'columns': ['type_of_case']},
       {'columns': ['country']},
       {'columns': ['county']},
       {'columns': ['subcounty']},
@@ -22,6 +23,7 @@ WITH base_data AS (
         disease,
         case_date,
         epi_week,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -33,7 +35,7 @@ WITH base_data AS (
         SUM(CASE WHEN died = 1 THEN 1 ELSE 0 END) AS died
     FROM {{ ref('fct_case_linelist') }}
     WHERE disease IN ({{ diseases | join(', ') }}) OR syndrome IN ({{ syndromes | join(', ') }})
-    GROUP BY syndrome, disease, case_date, epi_week, country, county, subcounty
+    GROUP BY syndrome, disease, case_date, epi_week, type_of_case, country, county, subcounty
 ),
 
 final_data AS (
@@ -43,6 +45,7 @@ final_data AS (
         disease,
         case_date,
         epi_week,
+        type_of_case,
         country,
         county,
         subcounty,
@@ -73,6 +76,7 @@ SELECT
     disease,
     case_date,
     epi_week,
+    type_of_case,
     country,
     county,
     subcounty,

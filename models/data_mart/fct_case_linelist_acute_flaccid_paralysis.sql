@@ -3,6 +3,7 @@
     indexes=[
       {'columns': ['case_date']},
       {'columns': ['epi_week']},
+      {'columns': ['type_of_case']},
       {'columns': ['country']},
       {'columns': ['county']},
       {'columns': ['subcounty']},
@@ -26,6 +27,8 @@ SELECT
     epi_week,
     epid,
     date_of_investigation,
+    type_of_case,
+    unique_id_of_case,
     given_name,
     family_name,
     sex,

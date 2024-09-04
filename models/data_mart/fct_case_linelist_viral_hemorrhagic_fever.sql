@@ -27,6 +27,8 @@ SELECT
     epid,
     date_of_investigation,
     location_of_investigation,
+    type_of_case,
+    unique_id_of_case,
     given_name,
     family_name,
     sex,

@@ -16,6 +16,8 @@ SELECT
     epid::text AS epid,
     date_of_investigation::text AS date_of_investigation,
     location_of_investigation::text AS location_of_investigation,
+    type_of_case::text AS type_of_case,
+    unique_id_of_case::text AS unique_id_of_case,
     given_name::text AS given_name,
     family_name::text AS family_name,
     sex::text AS sex,

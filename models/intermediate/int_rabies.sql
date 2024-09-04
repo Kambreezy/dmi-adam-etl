@@ -15,6 +15,8 @@ SELECT
     CASE WHEN exposure_date ~ '^\d{2}/\d{2}/\d{4}$' THEN to_char(to_timestamp(exposure_date, 'DD/MM/YYYY'), 'YYYY "W"IW') ELSE NULL END AS epi_week,
     epid::text AS epid,
     date_of_investigation::text AS date_of_investigation,
+    type_of_case::text AS type_of_case,
+    unique_id_of_case::text AS unique_id_of_case,
     given_name::text AS given_name,
     family_name::text AS family_name,
     sex::text AS sex,
